@@ -28,8 +28,10 @@ class Handle(View):
             timestamp = data.get('timestamp')
             nonce = data.get('nonce')
             echostr = data.get('echostr')
+            # token 与微信开发/基本配置中的token一致
             token = settings.WX_TOKEN
 
+            # 排序后进行sha1加密，结果与signature对照
             li = [token, timestamp, nonce]
             li.sort()
             sha1 = hashlib.sha1()
@@ -37,13 +39,23 @@ class Handle(View):
             hashcode = sha1.hexdigest()
 
             if hashcode == signature:
-                return echostr
+                return HttpResponse(echostr)
             else:
-                return ''
+                return HttpResponse('')
 
         except Exception, Argument:
             logger.error(Argument)
             return Argument
 
     def post(self, request, *args, **kwargs):
-        pass
+        try:
+            data  = request.post.decode('utf-8')
+            print('收到post')
+            print(data)
+            return HttpResponse('success')
+
+        except Exception, Argument:
+            logger.error(Argument)
+            return HttpResponse(Argument)
+
+
