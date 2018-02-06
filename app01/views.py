@@ -35,7 +35,7 @@ class Handle(View):
             li = [token, timestamp, nonce]
             li.sort()
             sha1 = hashlib.sha1()
-            map(sha1.update, list)
+            map(sha1.update, li)
             hashcode = sha1.hexdigest()
 
             if hashcode == signature:
