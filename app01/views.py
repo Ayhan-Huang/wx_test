@@ -45,7 +45,7 @@ class Handle(View):
 
         except Exception, Argument:
             logger.error(Argument)
-            return Argument
+            return HttpResponse(Argument)
 
     def post(self, request, *args, **kwargs):
         try:
